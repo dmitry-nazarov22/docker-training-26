@@ -2,7 +2,7 @@ const express = require("express");
 const database = require("./database/crudrepository");
 const locationsRouter = require("./database/locations");
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
 database.initializeTable();
@@ -23,6 +23,9 @@ const setupGracefulShutdown = (server) => {
   process.on("SIGTERM", shutdown); // system manager, some other application
   process.on("SIGINT", shutdown); // ctrl-c
 };
+
+const path = require("path");
+app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", locationsRouter);
 
