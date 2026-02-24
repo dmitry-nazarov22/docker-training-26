@@ -1,21 +1,20 @@
-# Base image will be latest Alpine Linux
-FROM alpine:latest
+# Use the official Node.js 20 image as the base image
+FROM node:20
 
-# Copy everything from your project directory to
-# a folder called /app in the container.
-# Note: this also copies the Dockerfile itself, which is
-# harmless but unnecessary. In later sections we will use
-# a .dockerignore file to exclude such files.
-COPY . /app
+# Set the working directory inside the container
+WORKDIR /usr/src/app
 
-# Move into that directory
-WORKDIR /app
+# Copy package.json and package-lock.json (if exists) to the working directory
+COPY package*.json ./
 
-# Install Java 25
-RUN apk update && apk add openjdk25
+# Install dependencies specified in package.json
+RUN npm install
 
-# Compile app
-RUN javac Main.java
+# Copy the rest of the application files to the container's working directory
+COPY . .
 
-# Run the compiled app
-CMD ["java", "Main"]
+# Expose port 3000 to allow external access to the application
+EXPOSE 3000
+
+# Define the command to run the application (starting the Node.js server)
+CMD ["node", "index.js"]

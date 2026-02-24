@@ -1,3 +1,7 @@
 services:
-  java-app:
+  node-app:
     build: .
+    ports:
+      - "3000:3000"
+    container_name: express-sqlite-app
+    restart: unless-stopped

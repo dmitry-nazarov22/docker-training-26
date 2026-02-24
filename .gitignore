@@ -25,3 +25,9 @@ dist-ssr
 
 # README.md with assignments from the course
 README.md
+
+# Assignments ignore requirements
+*.db
+*.sqlite
+.env
+.DS_Store
